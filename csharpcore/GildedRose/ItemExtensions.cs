@@ -6,7 +6,7 @@ public static class ItemExtensions
 
     public static void IncreaseQuality(this Item item) => item.Quality += 1;
 
-    public static void DecreaseQuality(this Item item) => item.Quality -= 1;
+    public static void DecreaseQualityBy(this Item item, int toDecrease = 1) => item.Quality -= toDecrease;
 
     public static bool ReachedMaxQuality(this Item item) => item.Quality >= 50;
     
@@ -18,11 +18,11 @@ public static class ItemExtensions
         }
     }
     
-    public static void DecreaseQualityIfItHasSome(this Item item)
+    public static void DecreaseQualityByIfItHasSome(this Item item, int toDecrease = 1)
     {
         if (item.HasSomeQuality())
         {
-            item.DecreaseQuality();
+            item.DecreaseQualityBy(toDecrease);
         }
     }
 }

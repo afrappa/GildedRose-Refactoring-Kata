@@ -183,5 +183,22 @@ namespace GildedRoseTests
             
             backstagePasses.Quality.Should().Be(0);
         }
+        
+        [Fact]
+        public void ConjuredItemsDegradeInQualityTwiceAsFastAsNormalItems()
+        {
+            var conjured = new Item { Name = "Conjured", SellIn = 12, Quality = 5 };
+            
+            IList<Item> items = new List<Item> { conjured };
+            
+            var app = new GildedRose(items);
+            app.UpdateQuality();
+            
+            conjured.Quality.Should().Be(3);
+            
+            app.UpdateQuality();
+            
+            conjured.Quality.Should().Be(1);
+        }
     }
 }
