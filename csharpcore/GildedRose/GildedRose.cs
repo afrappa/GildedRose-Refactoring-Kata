@@ -19,38 +19,45 @@ namespace GildedRoseKata
         {
             foreach (var item in Items)
             {
-                UpdateItemQuality(item);
+                UpdateItem(item);
             }
         }
 
-        private void UpdateItemQuality(Item item)
+        private void UpdateItem(Item item)
         {
+            var updateStrategy = UpdateItemStrategyFactory.Create(item.Name);
+            if (updateStrategy is DefaultUpdateItemStrategy or AgedBrieUpdateItemStrategy or BackstagePassesUpdateItemStrategy or SulfurasUpdateItemStrategy)
+            {
+                updateStrategy.Update(item);
+                return;
+            }
+
             if (item.Name != AgedBrie && item.Name != BackstagePasses)
             {
-                if (item.Quality > 0)
+                if (item.HasSomeQuality())
                 {
                     if (item.Name != Sulfuras)
                     {
-                        item.Quality -= 1;
+                        item.DecreaseQuality();
                     }
                 }
             }
             else
             {
-                if (!ReachedMaxQuality(item))
+                if (!item.ReachedMaxQuality())
                 {
-                    IncreaseQuality(item);
+                    item.IncreaseQuality();
 
                     if (item.Name == BackstagePasses)
                     {
                         if (item.SellIn < 11)
                         {
-                            IncreaseQualityIfNotMax(item);
+                            item.IncreaseQualityIfNotMax();
                         }
 
                         if (item.SellIn < 6)
                         {
-                            IncreaseQualityIfNotMax(item);
+                            item.IncreaseQualityIfNotMax();
                         }
                     }
                 }
@@ -67,12 +74,12 @@ namespace GildedRoseKata
                 {
                     if (item.Name != BackstagePasses)
                     {
-                        if (item.Quality > 0)
+                        if (!item.HasSomeQuality())
+                            return;
+                        
+                        if (item.Name != Sulfuras)
                         {
-                            if (item.Name != Sulfuras)
-                            {
-                                DecreaseQuality(item);
-                            }
+                            item.DecreaseQuality();
                         }
                     }
                     else
@@ -82,32 +89,9 @@ namespace GildedRoseKata
                 }
                 else
                 {
-                    IncreaseQualityIfNotMax(item);
+                    item.IncreaseQualityIfNotMax();
                 }
             }
-        }
-
-        private static void IncreaseQualityIfNotMax(Item item)
-        {
-            if (!ReachedMaxQuality(item))
-            {
-                IncreaseQuality(item);
-            }
-        }
-
-        private static void IncreaseQuality(Item item)
-        {
-            item.Quality += 1;
-        }
-        
-        private static void DecreaseQuality(Item item)
-        {
-            item.Quality -= 1;
-        }
-
-        private static bool ReachedMaxQuality(Item item)
-        {
-            return item.Quality >= 50;
         }
     }
 }
