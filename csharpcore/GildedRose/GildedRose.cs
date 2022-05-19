@@ -25,7 +25,6 @@ namespace GildedRoseKata
 
         private void UpdateItemQuality(Item item)
         {
-
             if (item.Name != AgedBrie && item.Name != BackstagePasses)
             {
                 if (item.Quality > 0)
@@ -38,26 +37,20 @@ namespace GildedRoseKata
             }
             else
             {
-                if (item.Quality < 50)
+                if (!ReachedMaxQuality(item))
                 {
-                    item.Quality += 1;
+                    IncreaseQuality(item);
 
                     if (item.Name == BackstagePasses)
                     {
                         if (item.SellIn < 11)
                         {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality += 1;
-                            }
+                            IncreaseQualityIfNotMax(item);
                         }
 
                         if (item.SellIn < 6)
                         {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality += 1;
-                            }
+                            IncreaseQualityIfNotMax(item);
                         }
                     }
                 }
@@ -78,23 +71,43 @@ namespace GildedRoseKata
                         {
                             if (item.Name != Sulfuras)
                             {
-                                item.Quality -= 1;
+                                DecreaseQuality(item);
                             }
                         }
                     }
                     else
                     {
-                        item.Quality -= item.Quality;
+                        item.Quality = 0;
                     }
                 }
                 else
                 {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality += 1;
-                    }
+                    IncreaseQualityIfNotMax(item);
                 }
             }
+        }
+
+        private static void IncreaseQualityIfNotMax(Item item)
+        {
+            if (!ReachedMaxQuality(item))
+            {
+                IncreaseQuality(item);
+            }
+        }
+
+        private static void IncreaseQuality(Item item)
+        {
+            item.Quality += 1;
+        }
+        
+        private static void DecreaseQuality(Item item)
+        {
+            item.Quality -= 1;
+        }
+
+        private static bool ReachedMaxQuality(Item item)
+        {
+            return item.Quality >= 50;
         }
     }
 }
