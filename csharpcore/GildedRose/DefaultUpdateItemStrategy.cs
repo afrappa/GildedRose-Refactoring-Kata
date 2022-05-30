@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata;
 
-internal class DefaultUpdateItemStrategy : IUpdateItemStrategy
+public class DefaultUpdateItemStrategy : IUpdateItemStrategy
 {
     public void Update(Item item)
     {

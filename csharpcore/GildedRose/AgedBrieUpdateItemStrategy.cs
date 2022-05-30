@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata;
 
-internal class AgedBrieUpdateItemStrategy : IUpdateItemStrategy
+public class AgedBrieUpdateItemStrategy : IUpdateItemStrategy
 {
     public void Update(Item item)
     {

@@ -19,7 +19,7 @@ namespace GildedRoseKata
             }
         }
 
-        private void UpdateItem(Item item)
+        private static void UpdateItem(Item item)
         {
             var updateStrategy = UpdateItemStrategyFactory.Create(item.Name); 
             updateStrategy.Update(item);

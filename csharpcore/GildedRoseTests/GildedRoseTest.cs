@@ -27,56 +27,31 @@ namespace GildedRoseTests
             
             bar.SellIn.Should().Be(11);
             bar.Quality.Should().Be(4);
-            
-            app.UpdateQuality();
-            
-            foo.SellIn.Should().Be(3);
-            foo.Quality.Should().Be(1);
-            
-            bar.SellIn.Should().Be(10);
-            bar.Quality.Should().Be(3);
         }
 
         [Fact]
         public void OnceTheSellByDateHasPassedQualityDegradesTwiceAsFast()
         {
-            var foo = new Item { Name = "foo", SellIn = 1, Quality = 10 };
+            var foo = new Item { Name = "foo", SellIn = 0, Quality = 9 };
             
             IList<Item> items = new List<Item> { foo };
             
             var app = new GildedRose(items);
-            app.UpdateQuality();
-
-            foo.SellIn.Should().Be(0);
-            foo.Quality.Should().Be(9);
-            
+           
             app.UpdateQuality();
             
             foo.SellIn.Should().Be(-1);
             foo.Quality.Should().Be(7);
-            
-            app.UpdateQuality();
-            
-            foo.SellIn.Should().Be(-2);
-            foo.Quality.Should().Be(5);
         }
 
         [Fact]
         public void TheQualityOfAnItemIsNeverNegative()
         {
-            var foo = new Item { Name = "foo", SellIn = 1, Quality = 1 };
+            var foo = new Item { Name = "foo", SellIn = 1, Quality = 0 };
             
             IList<Item> items = new List<Item> { foo };
             
             var app = new GildedRose(items);
-            app.UpdateQuality();
-            
-            foo.Quality.Should().Be(0);
-            
-            app.UpdateQuality();
-            
-            foo.Quality.Should().Be(0);
-
             app.UpdateQuality();
             
             foo.Quality.Should().Be(0);
@@ -93,24 +68,16 @@ namespace GildedRoseTests
             app.UpdateQuality();
             
             agedBrie.Quality.Should().Be(2);
-            
-            app.UpdateQuality();
-            
-            agedBrie.Quality.Should().Be(3);
         }
         
         [Fact]
         public void TheQualityOfAnItemIsNeverMoreThan50()
         {
-            var agedBrie = new Item { Name = "Aged Brie", SellIn = 5, Quality = 49 };
+            var agedBrie = new Item { Name = "Aged Brie", SellIn = 5, Quality = 50 };
             
             IList<Item> items = new List<Item> { agedBrie };
             
             var app = new GildedRose(items);
-            app.UpdateQuality();
-            
-            agedBrie.Quality.Should().Be(50);
-            
             app.UpdateQuality();
             
             agedBrie.Quality.Should().Be(50);
@@ -127,10 +94,6 @@ namespace GildedRoseTests
             app.UpdateQuality();
             
             sulfuras.Quality.Should().Be(80);
-            
-            app.UpdateQuality();
-            
-            sulfuras.Quality.Should().Be(80);
         }
         
         [Fact]
@@ -144,10 +107,6 @@ namespace GildedRoseTests
             app.UpdateQuality();
             
             backstagePasses.Quality.Should().Be(7);
-            
-            app.UpdateQuality();
-            
-            backstagePasses.Quality.Should().Be(9);
         }
         
         [Fact]
@@ -161,24 +120,16 @@ namespace GildedRoseTests
             app.UpdateQuality();
             
             backstagePasses.Quality.Should().Be(8);
-            
-            app.UpdateQuality();
-            
-            backstagePasses.Quality.Should().Be(11);
         }
         
         [Fact]
         public void BackstagePassesQualityDropsTo0AfterTheConcert()
         {
-            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 5 };
+            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 5 };
             
             IList<Item> items = new List<Item> { backstagePasses };
             
             var app = new GildedRose(items);
-            app.UpdateQuality();
-            
-            backstagePasses.Quality.Should().Be(8);
-            
             app.UpdateQuality();
             
             backstagePasses.Quality.Should().Be(0);
@@ -187,7 +138,7 @@ namespace GildedRoseTests
         [Fact]
         public void ConjuredItemsDegradeInQualityTwiceAsFastAsNormalItems()
         {
-            var conjured = new Item { Name = "Conjured", SellIn = 12, Quality = 5 };
+            var conjured = new Item { Name = "Conjured Mana Cake", SellIn = 12, Quality = 5 };
             
             IList<Item> items = new List<Item> { conjured };
             
@@ -195,10 +146,6 @@ namespace GildedRoseTests
             app.UpdateQuality();
             
             conjured.Quality.Should().Be(3);
-            
-            app.UpdateQuality();
-            
-            conjured.Quality.Should().Be(1);
         }
     }
 }

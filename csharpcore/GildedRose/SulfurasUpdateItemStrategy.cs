@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata;
 
-internal class SulfurasUpdateItemStrategy : IUpdateItemStrategy
+public class SulfurasUpdateItemStrategy : IUpdateItemStrategy
 {
     public void Update(Item item)
     {

@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata;
 
-internal class BackstagePassesUpdateItemStrategy : IUpdateItemStrategy
+public class BackstagePassesUpdateItemStrategy : IUpdateItemStrategy
 {
     public void Update(Item item)
     {

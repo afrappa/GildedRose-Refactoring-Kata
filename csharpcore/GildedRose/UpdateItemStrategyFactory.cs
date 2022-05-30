@@ -5,7 +5,7 @@ public class UpdateItemStrategyFactory
     private const string AgedBrie = "Aged Brie";
     private const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
     private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
-    private const string Conjured = "Conjured";
+    private const string Conjured = "Conjured Mana Cake";
 
     public static IUpdateItemStrategy Create(string name)
     {
